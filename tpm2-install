@@ -1,0 +1,24 @@
+#!/bin/bash
+
+build() {
+    local mod
+    add_module "tpm_crb"
+    
+    if [[ $TPM_MODULES ]]; then
+        for mod in $TPM_MODULES; do
+            add_module "$mod"
+        done
+    else
+        add_all_modules /tpm/
+    fi
+
+    add_binary "/usr/bin/tpm2_unseal"
+    add_binary "/usr/lib/libtss2-tcti-device.so"
+    add_runscript
+}
+
+help() {
+    cat <<HELPEOF
+This hook allows for reading the encryption key from TPM.
+HELPEOF
+}
