@@ -1,0 +1,6 @@
+#!/usr/bin/ash
+
+run_hook() {
+    modprobe -a -q tpm_crb >/dev/null 2>&1
+    tpm2_unseal -c 0x81000000 -p pcr:sha1:7 -o /your_file.bin
+}
